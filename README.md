@@ -24,20 +24,22 @@ To install the plugin, follow these instructions.
 
 ## tuersteher Overview
 
--Insert text here-
+with this plugin your site will be protectet against public view.
+Anonym guests only can view the index and the login
 
 ## Configuring tuersteher
 
--Insert text here-
+you can configure the allowed pages for public at /controllers/UsersControllersController.php
+just add the template to teh list.
 
 ## Using tuersteher
 
--Insert text here-
+after installing the plugin, you need to give your users or usergroups the permission 'Betrachten' to view the page frontend
 
 ## tuersteher Roadmap
 
 Some things to do, and ideas for potential features:
 
-* Release it
+* configuration options
 
 Brought to you by [Rainer Zarth](raz.ddnss.de)
