@@ -1,0 +1,40 @@
+{
+    "name": "rainerzarthtuersteher/tuersteher",
+    "description": "Craft Plugin for restricting Pageview only to the Registered Users",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "tuersteher"
+    ],
+    "support": {
+        "docs": "???",
+        "issues": "???"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rainer Zarth",
+            "homepage": "raz.ddnss.de"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "rainerzarth\\tuersteher\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "tuersteher",
+        "handle": "tuersteher",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "???",
+        "class": "rainerzarthtuersteher\\tuersteher\\Tuersteher"
+    }
+}
