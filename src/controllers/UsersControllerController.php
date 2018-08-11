@@ -2,13 +2,13 @@
 /**
  * tuersteher plugin for Craft CMS 3.x
  *
- * Craft Plugin for restricting Pageview only to the Registered Users
+ * Craft CMS Plugin to restrict the view of the Frontend only to registered users
  *
- * @link      raz.ddnss.de
+ * @link      http://raz.ddnss.de
  * @copyright Copyright (c) 2018 Rainer Zarth
  */
 
-namespace rainerzarthtuersteher\tuersteher\controllers;
+namespace rainerzarth\tuersteher\controllers;
 
 use rainerzarth\tuersteher\Tuersteher;
 
@@ -16,7 +16,7 @@ use Craft;
 use craft\web\Controller;
 
 /**
- * UsersControllers Controller
+ * UsersController Controller
  *
  * Generally speaking, controllers are the middlemen between the front end of
  * the CP/website and your plugin’s services. They contain action methods which
@@ -35,7 +35,7 @@ use craft\web\Controller;
  * @package   Tuersteher
  * @since     1.0.0
  */
-class UsersControllersController extends Controller
+class UsersControllerController extends Controller
 {
 
     // Protected Properties
@@ -53,10 +53,11 @@ class UsersControllersController extends Controller
 
     /**
      * Handle a request going to our plugin's index action URL,
-     * e.g.: actions/tuersteher/users-controllers
+     * e.g.: actions/tuersteher/users-controller
      *
      * @return mixed
      */
+
     public function actionIndex()
     {
         if (Tuersteher::$plugin->hasPermission()) {
@@ -64,5 +65,24 @@ class UsersControllersController extends Controller
         }
         
         return $this->renderFrontendTemplate('login');
+    }
+
+    /**
+     * Handle a request going to our plugin's actionDoSomething URL,
+     * e.g.: actions/tuersteher/users-controller/do-something
+     *
+     * @return mixed
+     */
+
+    private function renderFrontendTemplate(string $template, array $params = []): string
+    {
+        $oldMode = $this->view->getTemplateMode();
+        $this->view->setTemplateMode(View::TEMPLATE_MODE_CP);
+
+        $rendered = $this->view->renderTemplate($template, $params);
+        
+        $this->view->setTemplateMode($oldMode);
+
+        return $rendered;
     }
 }

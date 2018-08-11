@@ -2,13 +2,14 @@
 /**
  * tuersteher plugin for Craft CMS 3.x
  *
- * Craft Plugin for restricting Pageview only to the registered Users
+ * Craft CMS Plugin to restrict the view of the Frontend only to registered users
  *
- * @link      raz.ddnss.de
+ * @link      http://raz.ddnss.de
  * @copyright Copyright (c) 2018 Rainer Zarth
  */
 
 namespace rainerzarth\tuersteher;
+
 
 use Craft;
 use craft\web\UrlManager;
@@ -42,8 +43,6 @@ use yii\base\Event;
  * @package   Tuersteher
  * @since     1.0.0
  *
- * @property  UserPermissionsService $userPermissions
- * @property  PluginsService $plugins
  */
 class Tuersteher extends Plugin
 {
@@ -87,6 +86,14 @@ class Tuersteher extends Plugin
         parent::init();
         self::$plugin = $this;
 
+        // Register our site routes
+        Event::on(
+            UrlManager::class,
+            UrlManager::EVENT_REGISTER_SITE_URL_RULES,
+            function (RegisterUrlRulesEvent $event) {
+                $event->rules['login'] = 'login';
+            }
+        );
         // Do something after we're installed
         Event::on(
             Plugins::class,
@@ -98,7 +105,6 @@ class Tuersteher extends Plugin
                 }
             }
         );
-        $this->registerEventListeners();
 
 /**
  * Logging in Craft involves using one of the following methods:
@@ -131,8 +137,8 @@ class Tuersteher extends Plugin
     // Protected Methods
     // =========================================================================
 
-    protected function registerUserRights{
-        //hier wird die Berechtigung erstellt für dieUser
+    protected function registerUserRights(){
+        //adding Permission for the users
         Event::on(
             UserPermissions::class,
             UserPermissions::EVENT_REGISTER_PERMISSIONS,
@@ -143,8 +149,7 @@ class Tuersteher extends Plugin
         });
     }
 
-    protected function registerEventListeners
-    {
+    protected function registerEventListeners(){
 
         // Handler: EVENT_AFTER_LOAD_PLUGINS
         Event::on(
@@ -170,5 +175,10 @@ class Tuersteher extends Plugin
                 }
             }
         );
+    }
+
+    public function hasPermission(): bool
+    {
+        return $checkPerms = $user->can('Betrachten');
     }
 }
