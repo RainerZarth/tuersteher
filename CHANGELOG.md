@@ -15,3 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.0.3 - 2018-08-11
 ### Added
 - activated security
+
+## 1.0.4 - 2018-08-11
+### Added
+- fixed permission bug
