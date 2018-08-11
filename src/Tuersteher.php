@@ -65,7 +65,7 @@ class Tuersteher extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '1.0.4';
+    public $schemaVersion = '1.0.5';
 
     // Public Methods
     // =========================================================================
@@ -117,9 +117,18 @@ class Tuersteher extends Plugin
  */
         parent::init();
 
-        self::$plugin = $this;
+        Event::on(
+        UserPermissions::class,
+        UserPermissions::EVENT_REGISTER_PERMISSIONS,
+        function(RegisterUserPermissionsEvent $event) {
+            $event->permissions['Betrachten'] = [
+                'Betrachten' => [
+                    'Betrachten' => 'Betrachten',
+                ],
+            ];
+        });
 
-        $this->registerUserRights();
+        self::$plugin = $this;
 
         $this->registerEventListeners();
 
@@ -136,19 +145,6 @@ class Tuersteher extends Plugin
     // Protected Methods
     // =========================================================================
 
-    protected function registerUserRights(){
-        //adding Permission for the users
-        Event::on(
-        UserPermissions::class,
-        UserPermissions::EVENT_REGISTER_PERMISSIONS,
-        function(RegisterUserPermissionsEvent $event) {
-            $event->permissions['Betrachten'] = [
-                'Betrachten' => [
-                    'Betrachten' => 'Betrachten',
-                ],
-            ];
-        });
-    }
 
     protected function registerEventListeners(){
 
@@ -172,7 +168,7 @@ class Tuersteher extends Plugin
             View::EVENT_BEFORE_RENDER_PAGE_TEMPLATE,
             function(Event $event) {
                 if (!$this->hasPermission() && !$this->isSuperadmin()) {
-                    Craft::$app->getResponse()->redirect('login');
+                    Craft::$app->getResponse()->redirect('admin');
                 }
             }
         );
