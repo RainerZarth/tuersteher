@@ -65,7 +65,7 @@ class Tuersteher extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '1.0.0';
+    public $schemaVersion = '1.0.2';
 
     // Public Methods
     // =========================================================================
@@ -86,14 +86,6 @@ class Tuersteher extends Plugin
         parent::init();
         self::$plugin = $this;
 
-        // Register our site routes
-        Event::on(
-            UrlManager::class,
-            UrlManager::EVENT_REGISTER_SITE_URL_RULES,
-            function (RegisterUrlRulesEvent $event) {
-                $event->rules['login'] = 'login';
-            }
-        );
         // Do something after we're installed
         Event::on(
             Plugins::class,
@@ -170,15 +162,24 @@ class Tuersteher extends Plugin
             View::class,
             View::EVENT_BEFORE_RENDER_PAGE_TEMPLATE,
             function(Event $event) {
-                if (!$this->hasPermission()) {
+                if (!$this->hasPermission() && !$this->isSuperadmin()) {
                     Craft::$app->getResponse()->redirect('login');
                 }
             }
         );
     }
 
+    
+
     public function hasPermission(): bool
     {
-        return $checkPerms = $user->can('Betrachten');
+        $currentUser = Craft::$app->getUser()->getIdentity();
+        return $checkPerms = $currentUser->can('Betrachten');
+    }
+
+    public function isSuperadmin(): bool
+    {
+        $currentUser = Craft::$app->getUser()->getIdentity();
+        return $checkPerms = $currentUser->admin;
     }
 }
