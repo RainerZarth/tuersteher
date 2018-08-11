@@ -106,6 +106,18 @@ class Tuersteher extends Plugin
         parent::init();
         self::$plugin = $this;
 
+        Event::on(
+            UserPermissions::class,
+            UserPermissions::EVENT_REGISTER_PERMISSIONS,
+            function(RegisterUserPermissionsEvent $event) {
+                $event->permissions[\Craft::t('tuersteher', 'Betrachten')] = [
+                    'view frontend' => ['label' => \Craft::t('tuersteher', 'Betrachten')]
+                ];
+            }
+        );
+
+        $this->registerEventListeners();
+
         Craft::info(
             Craft::t(
                 'tuersteher',
@@ -114,18 +126,6 @@ class Tuersteher extends Plugin
             ),
             __METHOD__
         );
-
-        Event::on(
-            UserPermissions::class,
-            UserPermissions::EVENT_REGISTER_PERMISSIONS,
-            function(RegisterUserPermissionsEvent $event) {
-                $event->permissions[\Craft::t('tuersteher', 'Betrachten')] = [
-                    'Betrachten' => ['Betrachten' => \Craft::t('tuersteher', 'Betrachten')],
-                ];
-            }
-        );
-
-        $this->registerEventListeners();
     }
 
     // Protected Methods
