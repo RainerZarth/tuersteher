@@ -11,3 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.0.2 - 2018-08-11
 ### Added
 - added access for admins
+
+## 1.0.3 - 2018-08-11
+### Added
+- activated security
