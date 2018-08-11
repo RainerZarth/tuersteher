@@ -2,7 +2,7 @@
     "name": "rainerzarth/tuersteher",
     "description": "Craft Plugin for restricting Pageview only to the Registered Users",
     "type": "craft-plugin",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "keywords": [
         "craft",
         "cms",

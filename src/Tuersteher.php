@@ -65,7 +65,7 @@ class Tuersteher extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '1.0.5';
+    public $schemaVersion = '1.0.7';
 
     // Public Methods
     // =========================================================================
@@ -83,19 +83,6 @@ class Tuersteher extends Plugin
      */
     public function init()
     {
-        parent::init();
-        self::$plugin = $this;
-
-        // Do something after we're installed
-        Event::on(
-            Plugins::class,
-            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
-                if ($event->plugin === $this) {
-                    // We were just installed
-                }
-            }
-        );
 
 /**
  * Logging in Craft involves using one of the following methods:
@@ -115,20 +102,9 @@ class Tuersteher extends Plugin
  *
  * http://www.yiiframework.com/doc-2.0/guide-runtime-logging.html
  */
+
         parent::init();
-
-        Event::on(
-            UserPermissions::class,
-            UserPermissions::EVENT_REGISTER_PERMISSIONS,
-            function(RegisterUserPermissionsEvent $event) {
-                $event->permissions[\Craft::t('tuersteher', 'Betrachten')] = [
-                    'Betrachten' => ['Betrachten' => \Craft::t('tuersteher', 'Betrachten')],
-                ];
-            });
-
         self::$plugin = $this;
-
-        $this->registerEventListeners();
 
         Craft::info(
             Craft::t(
@@ -138,11 +114,22 @@ class Tuersteher extends Plugin
             ),
             __METHOD__
         );
+
+        Event::on(
+            UserPermissions::class,
+            UserPermissions::EVENT_REGISTER_PERMISSIONS,
+            function(RegisterUserPermissionsEvent $event) {
+                $event->permissions[\Craft::t('tuersteher', 'Betrachten')] = [
+                    'Betrachten' => ['Betrachten' => \Craft::t('tuersteher', 'Betrachten')],
+                ];
+            }
+        );
+
+        $this->registerEventListeners();
     }
 
     // Protected Methods
     // =========================================================================
-
 
     protected function registerEventListeners(){
 
@@ -170,9 +157,7 @@ class Tuersteher extends Plugin
                 }
             }
         );
-    }
-
-    
+    } 
 
     public function hasPermission(): bool
     {
@@ -185,4 +170,5 @@ class Tuersteher extends Plugin
         $currentUser = Craft::$app->getUser()->getIdentity();
         return $checkPerms = $currentUser->admin;
     }
+
 }

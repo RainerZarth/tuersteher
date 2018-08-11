@@ -27,3 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.0.6 - 2018-08-11
 ### Added
 - fixed permission bug
+
+## 1.0.7 - 2018-08-11
+### Added
+- trying to fix the instance bug
