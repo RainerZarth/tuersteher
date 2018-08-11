@@ -139,11 +139,13 @@ class Tuersteher extends Plugin
     protected function registerUserRights(){
         //adding Permission for the users
         Event::on(
-            UserPermissions::class,
-            UserPermissions::EVENT_REGISTER_PERMISSIONS,
-            function(RegisterUserPermissionsEvent $event) {
-                $event->permissions['Betrachten der Seiten'] = [
-                    'Betrachten' => ['Betrachten' => 'Betrachter'],
+        UserPermissions::class,
+        UserPermissions::EVENT_REGISTER_PERMISSIONS,
+        function(RegisterUserPermissionsEvent $event) {
+            $event->permissions['Betrachten'] = [
+                'Betrachten' => [
+                    'Betrachten' => 'Betrachten',
+                ],
             ];
         });
     }
