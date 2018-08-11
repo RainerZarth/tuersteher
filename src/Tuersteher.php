@@ -93,7 +93,6 @@ class Tuersteher extends Plugin
             function (PluginEvent $event) {
                 if ($event->plugin === $this) {
                     // We were just installed
-                    $this->registerUserRights();
                 }
             }
         );
@@ -116,6 +115,14 @@ class Tuersteher extends Plugin
  *
  * http://www.yiiframework.com/doc-2.0/guide-runtime-logging.html
  */
+        parent::init();
+
+        self::$plugin = $this;
+
+        $this->registerUserRights();
+
+        $this->registerEventListeners();
+
         Craft::info(
             Craft::t(
                 'tuersteher',
