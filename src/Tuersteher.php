@@ -118,15 +118,13 @@ class Tuersteher extends Plugin
         parent::init();
 
         Event::on(
-        UserPermissions::class,
-        UserPermissions::EVENT_REGISTER_PERMISSIONS,
-        function(RegisterUserPermissionsEvent $event) {
-            $event->permissions['Betrachten'] = [
-                'Betrachten' => [
-                    'Betrachten' => 'Betrachten',
-                ],
-            ];
-        });
+            UserPermissions::class,
+            UserPermissions::EVENT_REGISTER_PERMISSIONS,
+            function(RegisterUserPermissionsEvent $event) {
+                $event->permissions[\Craft::t('tuersteher', 'Betrachten')] = [
+                    'Betrachten' => ['Betrachten' => \Craft::t('tuersteher', 'Betrachten')],
+                ];
+            });
 
         self::$plugin = $this;
 
