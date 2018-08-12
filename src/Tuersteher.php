@@ -15,6 +15,17 @@ use Craft;
 use craft\base\Plugin;
 use craft\services\Plugins;
 use craft\events\PluginEvent;
+use craft\web\UrlManager;
+use craft\web\Application;
+use craft\web\Session;
+use craft\web\View;
+use craft\events\RegisterUrlRulesEvent;
+use craft\models\UserGroup;
+use craft\controllers\UsersControllers;
+use craft\events\RegisterUserPermissionEvent;
+use craft\services\UserPermissions;
+use craft\events\RegisterCpAlertsEvent;
+use craft\helpers\Cp;
 
 use yii\base\Event;
 
@@ -55,7 +66,7 @@ class Tuersteher extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '1.0.9';
+    public $schemaVersion = '1.1.1';
 
     // Public Methods
     // =========================================================================
