@@ -163,7 +163,7 @@ class Tuersteher extends Plugin
         );
     }*/
 
-    protected function handleSiteRequests(){
+/*    protected function handleSiteRequests(){
         Event::on(
             View::class,
             View::EVENT_BEFORE_RENDER_PAGE_TEMPLATE,
@@ -173,7 +173,7 @@ class Tuersteher extends Plugin
                 }
             }
         );
-    } 
+    } */
 
     public function hasPermission(): bool
     {
