@@ -55,7 +55,7 @@ class Tuersteher extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '1.0.10';
+    public $schemaVersion = '1.0.9';
 
     // Public Methods
     // =========================================================================

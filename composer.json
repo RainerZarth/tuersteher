@@ -2,7 +2,7 @@
     "name": "rainerzarth/tuersteher",
     "description": "prevent anonym user to view frontend content",
     "type": "craft-plugin",
-    "version": "1.0.10",
+    "version": "1.0.9",
     "keywords": [
         "craft",
         "cms",
@@ -11,8 +11,8 @@
         "tuersteher"
     ],
     "support": {
-        "docs": "https://github.com/https://github.com/RainerZarth/tuersteher/tuersteher/blob/master/README.md",
-        "issues": "https://github.com/https://github.com/RainerZarth/tuersteher/tuersteher/issues"
+        "docs": "https://github.com/RainerZarth/tuersteher/tuersteher/blob/master/README.md",
+        "issues": "https://github.com/RainerZarth/tuersteher/tuersteher/issues"
     },
     "license": "MIT",
     "authors": [

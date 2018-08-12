@@ -39,7 +39,3 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ## 1.0.9 - 2018-08-11
 ### Added
 - changed composer extra "hasCpSettings": true,
-
-## 1.0.10 - 2018-08-11
-### Added
-- trying to instanciate
