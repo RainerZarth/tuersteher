@@ -2,19 +2,20 @@
 /**
  * tuersteher plugin for Craft CMS 3.x
  *
- * Craft Plugin for restricting Pageview only to the registered Users
+ * prevent anonym user to view frontend content
  *
- * @link      raz.ddnss.de
+ * @link      http://github.com/RainerZarth/tuersteher
  * @copyright Copyright (c) 2018 Rainer Zarth
  */
 
 namespace rainerzarth\tuersteher;
 
+
 use Craft;
-use craft\web\UrlManager;
 use craft\base\Plugin;
 use craft\services\Plugins;
 use craft\events\PluginEvent;
+use craft\web\UrlManager;
 use craft\web\Application;
 use craft\web\Session;
 use craft\web\View;
@@ -42,8 +43,6 @@ use yii\base\Event;
  * @package   Tuersteher
  * @since     1.0.0
  *
- * @property  UserPermissionsService $userPermissions
- * @property  PluginsService $plugins
  */
 class Tuersteher extends Plugin
 {
@@ -58,6 +57,7 @@ class Tuersteher extends Plugin
      */
     public static $plugin;
 
+
     // Public Properties
     // =========================================================================
 
@@ -66,7 +66,7 @@ class Tuersteher extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '1.0.0';
+    public $schemaVersion = '1.1.1';
 
     // Public Methods
     // =========================================================================
@@ -94,11 +94,9 @@ class Tuersteher extends Plugin
             function (PluginEvent $event) {
                 if ($event->plugin === $this) {
                     // We were just installed
-                    $this->registerUserRights();
                 }
             }
         );
-        $this->registerEventListeners();
 
 /**
  * Logging in Craft involves using one of the following methods:
@@ -118,6 +116,8 @@ class Tuersteher extends Plugin
  *
  * http://www.yiiframework.com/doc-2.0/guide-runtime-logging.html
  */
+        $this->registerPermission();
+
         Craft::info(
             Craft::t(
                 'tuersteher',
@@ -126,25 +126,28 @@ class Tuersteher extends Plugin
             ),
             __METHOD__
         );
+
+        $this->handleSiteRequests();
     }
 
     // Protected Methods
     // =========================================================================
 
-    protected function registerUserRights{
-        //hier wird die Berechtigung erstellt für dieUser
-        Event::on(
+    protected function registerPermission(){
+
+            Event::on(
             UserPermissions::class,
             UserPermissions::EVENT_REGISTER_PERMISSIONS,
             function(RegisterUserPermissionsEvent $event) {
-                $event->permissions['Betrachten der Seiten'] = [
-                    'Betrachten' => ['Betrachten' => 'Betrachter'],
-            ];
-        });
+                $event->permissions[\Craft::t('tuersteher', 'Betrachten')] = [
+                    'viewfrontend' => ['label' => \Craft::t('tuersteher', 'Betrachten')]
+                ];
+            }
+        );
     }
 
-    protected function registerEventListeners
-    {
+
+/*    protected function registerEventListeners(){
 
         // Handler: EVENT_AFTER_LOAD_PLUGINS
         Event::on(
@@ -158,17 +161,30 @@ class Tuersteher extends Plugin
                 }
             }
         );
-    }
+    }*/
 
-    protected function handleSiteRequests(){
+/*    protected function handleSiteRequests(){
         Event::on(
             View::class,
             View::EVENT_BEFORE_RENDER_PAGE_TEMPLATE,
             function(Event $event) {
-                if (!$this->hasPermission()) {
+                if (!$this->hasPermission() && !$this->isSuperadmin()) {
                     Craft::$app->getResponse()->redirect('login');
                 }
             }
         );
+    } */
+
+    public function hasPermission(): bool
+    {
+        $currentUser = Craft::$app->getUser()->getIdentity();
+        return $checkPerms = $currentUser->can('viewfrontend');
     }
+
+    public function isSuperadmin(): bool
+    {
+        $currentUser = Craft::$app->getUser()->getIdentity();
+        return $checkPerms = $currentUser->admin;
+    }
+
 }

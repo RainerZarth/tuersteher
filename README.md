@@ -29,8 +29,7 @@ Anonym guests only can view the index and the login
 
 ## Configuring tuersteher
 
-you can configure the allowed pages for public at /controllers/UsersControllersController.php
-just add the template to teh list.
+coming soon
 
 ## Using tuersteher
 
